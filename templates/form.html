@@ -5,11 +5,11 @@
       <nav class="container container--70">
         <ul class="nav--actions">
           <li class="logged-user">
-            Witaj Agata
+            Hi Agata
             <ul class="dropdown">
-              <li><a href="#">Profil</a></li>
-              <li><a href="#">Ustawienia</a></li>
-              <li><a href="#">Wyloguj</a></li>
+              <li><a href="#">Profile</a></li>
+              <li><a href="#">Settings</a></li>
+              <li><a href="#">Log out</a></li>
             </ul>
           </li>
         </ul>
@@ -21,24 +21,24 @@
       <div class="slogan container container--90">
         <div class="slogan--item">
           <h1>
-            Oddaj rzeczy, których już nie chcesz<br />
-            <span class="uppercase">potrzebującym</span>
+            Give things you don't need anymore to the<br />
+            <span class="uppercase">needful</span>
           </h1>
 
           <div class="slogan--steps">
-            <div class="slogan--steps-title">Wystarczą 4 proste kroki:</div>
+            <div class="slogan--steps-title">4 simple steps:</div>
             <ul class="slogan--steps-boxes">
               <li>
-                <div><em>1</em><span>Wybierz rzeczy</span></div>
+                <div><em>1</em><span>Choose things</span></div>
               </li>
               <li>
-                <div><em>2</em><span>Spakuj je w worki</span></div>
+                <div><em>2</em><span>Pack them in bags</span></div>
               </li>
               <li>
-                <div><em>3</em><span>Wybierz fundację</span></div>
+                <div><em>3</em><span>Choose foundation</span></div>
               </li>
               <li>
-                <div><em>4</em><span>Zamów kuriera</span></div>
+                <div><em>4</em><span>Order delivery</span></div>
               </li>
             </ul>
           </div>
@@ -49,30 +49,29 @@
     <section class="form--steps">
       <div class="form--steps-instructions">
         <div class="form--steps-container">
-          <h3>Ważne!</h3>
+          <h3>Important!</h3>
           <p data-step="1" class="active">
-            Uzupełnij szczegóły dotyczące Twoich rzeczy. Dzięki temu będziemy
-            wiedzieć komu najlepiej je przekazać.
+            Complete the details of your belongings. Thanks to this we will
+            know who is best to pass them on to.
           </p>
           <p data-step="2">
-            Uzupełnij szczegóły dotyczące Twoich rzeczy. Dzięki temu będziemy
-            wiedzieć komu najlepiej je przekazać.
+            Complete the details of your belongings. Thanks to this we will
+            know who is best to pass them on to.
           </p>
           <p data-step="3">
-           Wybierz jedną, do
-            której trafi Twoja przesyłka.
+           Choose one to which your delivery will go to.
           </p>
-          <p data-step="4">Podaj adres oraz termin odbioru rzeczy.</p>
+          <p data-step="4">Provide the address and the date of receiver of the items.</p>
         </div>
       </div>
 
       <div class="form--steps-container">
-        <div class="form--steps-counter">Krok <span>1</span>/5</div>
+        <div class="form--steps-counter">Step <span>1</span>/5</div>
 
         <form action="form-confirmation.html" method="post">
           <!-- STEP 1: class .active is switching steps -->
           <div data-step="1" class="active">
-            <h3>Zaznacz co chcesz oddać:</h3>
+            <h3>Select what you want to donate:</h3>
 
             <div class="form-group form-group--checkbox">
               <label>
@@ -83,7 +82,7 @@
                 />
                 <span class="checkbox"></span>
                 <span class="description"
-                  >ubrania, które nadają się do ponownego użycia</span
+                  >clothes that can be reused</span
                 >
               </label>
             </div>
@@ -96,7 +95,7 @@
                   value="clothes-useless"
                 />
                 <span class="checkbox"></span>
-                <span class="description">ubrania, do wyrzucenia</span>
+                <span class="description">clothes to throw away</span>
               </label>
             </div>
 
@@ -104,7 +103,7 @@
               <label>
                 <input type="checkbox" name="categories" value="toys" />
                 <span class="checkbox"></span>
-                <span class="description">zabawki</span>
+                <span class="description">toys</span>
               </label>
             </div>
 
@@ -112,7 +111,7 @@
               <label>
                 <input type="checkbox" name="categories" value="books" />
                 <span class="checkbox"></span>
-                <span class="description">książki</span>
+                <span class="description">books</span>
               </label>
             </div>
 
@@ -120,29 +119,29 @@
               <label>
                 <input type="checkbox" name="categories" value="other" />
                 <span class="checkbox"></span>
-                <span class="description">inne</span>
+                <span class="description">others</span>
               </label>
             </div>
 
             <div class="form-group form-group--buttons">
-              <button type="button" class="btn next-step">Dalej</button>
+              <button type="button" class="btn next-step">Next</button>
             </div>
           </div>
 
           <!-- STEP 2 -->
           <div data-step="2">
-            <h3>Podaj liczbę 60l worków, w które spakowałeś/aś rzeczy:</h3>
+            <h3>Enter the number of 60l bags in which you packed your things:</h3>
 
             <div class="form-group form-group--inline">
               <label>
-                Liczba 60l worków:
+                Number of 60l bags:
                 <input type="number" name="bags" step="1" min="1" />
               </label>
             </div>
 
             <div class="form-group form-group--buttons">
-              <button type="button" class="btn prev-step">Wstecz</button>
-              <button type="button" class="btn next-step">Dalej</button>
+              <button type="button" class="btn prev-step">Back</button>
+              <button type="button" class="btn next-step">Next</button>
             </div>
           </div>
 

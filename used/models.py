@@ -19,15 +19,21 @@ class Institution(models.Model):
     type= models.IntegerField(choices=TYPE_CHOICES, default='foundation')
     categories= models.ManyToManyField(Category)
 
+    def __str__(self):
+        return f'{self.name}'
+
 class Donation(models.Model):
     quantity= models.IntegerField()
     categories= models.ManyToManyField(Category)
     institution= models.ForeignKey(Institution, on_delete=models.CASCADE)
-    address= models.CharField(max_length=250)
-    phone_number= models.SmallIntegerField()
+    address= models.CharField(max_length=250, null=True)
+    phone_number= models.IntegerField(null=True)
     city= models.CharField(max_length=64)
-    zip_code= models.CharField(max_length=64)  # what it should look like?
-    pick_up_date= models.DateField()
-    pick_up_time= models.DateField()
-    pick_up_comment= models.CharField(max_length=150)
+    zip_code= models.CharField(max_length=64, null=True)  # what it should look like?
+    pick_up_date= models.DateField(blank=True)
+    pick_up_time= models.DateTimeField(blank=True)
+    pick_up_comment= models.CharField(max_length=150, blank=True)
     user= models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+
+
+
