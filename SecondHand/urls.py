@@ -19,7 +19,7 @@ from used.views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', LandingPageView.as_view(), name='main'),
+    path('', LandingPageView.as_view(), name='index'),
     path('add-donation/', AddDonationView.as_view(), name='add-donation'),
     path('login/', LoginView.as_view(), name='login'),
     path('register/', RegisterView.as_view(), name='register'),
