@@ -3,13 +3,34 @@
 {% load static %}
 
     <header class="header--main-page">
+
+        {% if user.is_authenticated %}
       <nav class="container container--70">
         <ul class="nav--actions">
-          <li><a href="login/" class="btn btn--small btn--without-border">Login</a></li>
-          <li><a href="register/" class="btn btn--small btn--highlighted">Create account</a></li>
+          <li class="logged-user">
+            Hi {{ user.first_name }}
+            <ul class="dropdown">
+              <li><a href="#">Profile</a></li>
+              <li><a href="#">Settings</a></li>
+              <li><a href="/logout">Log out</a></li>
+            </ul>
+          </li>
+        </ul>
+
+        {% include 'menu.html' %}
+      </nav>
+
+     {% else %}
+     <nav class="container container--70">
+        <ul class="nav--actions">
+          <li><a href="/login/" class="btn btn--small btn--without-border">Login</a></li>
+          <li><a href="/register/" class="btn btn--small btn--highlighted">Create account</a></li>
         </ul>
           {% include 'menu.html' %}
       </nav>
+     {% endif %}
+
+
 
       <div class="slogan container container--90">
         <div class="slogan--item">
@@ -95,7 +116,9 @@
               <div class="title"> {{ found.name }} </div>
               <div class="subtitle">{{ found.description }}</div>
             </div>
-            <div class="col"><div class="text">{% for found_cat in found.categories.all %} {{ found_cat }}, {% endfor %}</div></div>
+            <div class="col"><div class="text">
+                    {{ found.categories.all|join:", " }}
+            </div></div>
           </li>
             {%  endfor %}
         </ul>
@@ -105,7 +128,7 @@
         {% endfor %}
         <!-- Pagination-->
       {% if founds.has_other_pages %}
-  <ul class="help--slides-pagination">
+     <ul class="help--slides-pagination">
 
     {% if founds.has_previous %}
       <li><a href="?page={{ founds.previous_page_number }}" class="btn btn--small btn--without-border">&laquo;</a></li>
@@ -128,12 +151,9 @@
     {% endif %}
   </ul>
 {% endif %}
-
-
-
       </div>
 
-      <!-- SLIDE 2 -->
+      <!-- SLIDE 2 --->
       <div class="help--slides" data-id="2">
         <p>
           In our database you will find a list of non-governmental organizations we cooperate with. You can check what they do, who they help and what they need.
@@ -145,7 +165,9 @@
               <div class="title">{{ gov.name }}</div>
               <div class="subtitle">{{ gov.description }}</div>
             </div>
-            <div class="col"><div class="text">{% for gov_cat in gov.categories.all %}{{ gov_cat }} {% endfor %}</div></div>
+            <div class="col"><div class="text">
+            {{ gov.categories.all|join:", " }}
+            </div></div>
           </li>
             {% endfor %}
         </ul>
@@ -172,8 +194,10 @@
               <div class="title">{{ col.name }}</div>
               <div class="subtitle">{{ col.description }}</div>
             </div>
-
-            <div class="col"><div class="text">{% for col_cat in col.categories.all %}{{ col_cat }} {% endfor %}</div></div>
+            <div class="col"><div class="text">
+            {{ col.categories.all|join:", " }}
+            </div>
+      </div>
           </li>
             {%  endfor %}
         </ul>
