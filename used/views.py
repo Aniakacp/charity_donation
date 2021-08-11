@@ -1,12 +1,17 @@
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
+from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.views import View
-from django.views.generic import CreateView
+from django.views.generic import CreateView,ListView
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+
 
 from accounts.forms import LoginForm, RegisterForm
-from used.models import Institution, Donation
+from used.forms import AdressForm, CategoryForm, CollectForm, InstitutionForm, BagsForm
+from used.models import Institution, Donation, Category
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from used.permission_mixin import MyTestUserPassesTest
 
 class LandingPageView(View):
     def get(self, request):
@@ -15,25 +20,59 @@ class LandingPageView(View):
         collections = Institution.objects.all().filter(type=3)
         all_institutions= Institution.objects.all().count()
         all_donations = Donation.objects.all().count()
+        paginate_by = 2
 
-        paginator = Paginator(foundations.order_by('categories'), 2)  # Show 2 contacts per page
+        foundations_paginator = Paginator(foundations.order_by('categories'), paginate_by)  # Show 2 contacts per page
+
         page = request.GET.get('page', 1)
-
-        print(foundations.count()//paginator.num_pages)  # ile pelnych stron
-        print(foundations.count() % paginator.num_pages) # ile dodatkowo
+        page_obj= foundations_paginator.get_page(page)
 
         try:
-            founds = paginator.page(page)
+            founds = foundations_paginator.page(page)
         except PageNotAnInteger:
-            founds = paginator.page(1)
+            founds = foundations_paginator.page(1)
         except EmptyPage:
-            founds = paginator.page(paginator.num_pages)
+            founds = foundations_paginator.page(foundations_paginator.num_pages)
 
-        return render(request,'index.html', {'foundations': foundations, 'non_gov_organizations':non_gov_organizations, 'collections': collections, 'all_institutions': all_institutions, 'all_donations':all_donations, 'founds': founds  })
+        return render(request,'index.html', {'foundations': foundations, 'non_gov_organizations':non_gov_organizations,
+                                             'collections': collections, 'all_institutions': all_institutions,
+                                             'all_donations':all_donations, 'founds': founds, 'page_obj':page_obj })
 
-class AddDonationView(View):
+class AddDonationView(MyTestUserPassesTest, View):
     def get(self, request):
-        return render(request,'form.html')
+
+        category_form= CategoryForm()
+        address_form = AdressForm()
+        collect_form= CollectForm()
+        instutution_form= InstitutionForm()
+        bags_form=BagsForm()
+        return render(request,'form.html', {'address_form':address_form, 'category_form':category_form, 'collect_form':collect_form, 'instutution_form':instutution_form, 'bags_form':bags_form})
+
+    def post(self, request):
+        category_form = CategoryForm(request.POST)
+        address_form = AdressForm(request.POST)
+        collect_form = CollectForm(request.POST)
+        instutution_form= InstitutionForm(request.POST)
+        bags_form = BagsForm(request.POST)
+        if category_form.is_valid() and address_form.is_valid() and collect_form.is_valid() and instutution_form.is_valid() and bags_form.is_valid():
+
+            categories = category_form.cleaned_data['name'] # <QuerySet [<Category: AGD>, <Category: Toys>]>
+
+            quantity = bags_form.cleaned_data['bags']
+            institution = instutution_form.cleaned_data['radio']
+            address = address_form.cleaned_data['street']
+            phone_number = address_form.cleaned_data['phone']
+            city = address_form.cleaned_data['city']
+            zip_code = address_form.cleaned_data['post_code']
+            pick_up_date = collect_form.cleaned_data['date']
+            pick_up_time = collect_form.cleaned_data['time']
+            pick_up_comment = collect_form.cleaned_data['notes']
+            user = request.user
+            Donation.objects.create(quantity=quantity, institution=institution, address=address, phone_number=phone_number, city=city, zip_code=zip_code,
+                                    pick_up_date=pick_up_date, pick_up_time=pick_up_time, pick_up_comment=pick_up_comment, user=user).categories.set(categories)
+            return redirect('confirmation')
+
+        return render(request, 'form.html', {'address_form':address_form, 'category_form':category_form, 'collect_form':collect_form, 'instutution_form':instutution_form, 'bags_form':bags_form})
 
 class ConfirmationView(View):
     def get(self, request):
@@ -75,3 +114,9 @@ class LogoutView(View):
     def get(self, request):
         logout(request)
         return redirect('index')
+
+class SettingsView(MyTestUserPassesTest, View):
+    def get(self, request):
+        return render(request, 'settings.html')
+
+

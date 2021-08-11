@@ -1,0 +1,27 @@
+<ul class="help--slides-items">
+      {% for found in page_obj %}
+        <li>
+            <div class="col">
+              <div class="title"> {{ found.name }} </div>
+              <div class="subtitle">{{ found.description }}</div>
+            </div>
+            <div class="col"><div class="text">
+                    {{ found.categories.all|join:", " }}
+            </div></div>
+          </li>
+        {% endfor %}
+</ul>
+
+<ul class="help--slides-pagination">
+     {% if founds.has_previous %}
+          <li><a href="?page={{ founds.previous_page_number }}" class="btn btn--small btn--without-border">&laquo;</a></li>
+          <li><a href="/?page=1/">&laquo;</a></li>
+          <li><a href="/?page={{ founds.previous_page_number}}/">previous</a></li>
+     {% endif %}
+          <li><a href="/?page=1" class="btn btn--small btn--without-border active" data-page="1">1</a></li>
+     {% if founds.has_next %}
+          <li><a href="http://127.0.0.1:8000/?page=2/" class="btn btn--small btn--without-border" data-page="2">2</a></li>
+          <li><a href="/?page=3/" class="btn btn--small btn--without-border" data-page="3">3</a></li>
+          <li><a href="/?page={{ founds.paginator.num_pages }}/" class="btn btn--small btn--without-border">&raquo;</a></li>
+     {% endif %}
+</ul>

@@ -31,10 +31,8 @@ class Donation(models.Model):
     phone_number= models.IntegerField(null=True)
     city= models.CharField(max_length=64)
     zip_code= models.CharField(max_length=64, null=True)  # what it should look like?
-    pick_up_date= models.DateField(blank=True)
-    pick_up_time= models.DateTimeField(blank=True)
+    pick_up_date= models.DateField()
+    pick_up_time= models.TimeField()
     pick_up_comment= models.CharField(max_length=150, blank=True)
-    user= models.OneToOneField(to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-
-
+    user= models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
