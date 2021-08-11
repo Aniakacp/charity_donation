@@ -6,17 +6,8 @@
 
         {% if user.is_authenticated %}
       <nav class="container container--70">
-        <ul class="nav--actions">
-          <li class="logged-user">
-            Hi {{ user.first_name }}
-            <ul class="dropdown">
-              <li><a href="#">Profile</a></li>
-              <li><a href="#">Settings</a></li>
-              <li><a href="/logout">Log out</a></li>
-            </ul>
-          </li>
-        </ul>
 
+        {% include 'logged_menu.html' %}
         {% include 'menu.html' %}
       </nav>
 
@@ -109,51 +100,13 @@
       <div class="help--slides active" data-id="1">
         <p>In our database you will find a list of verified Foundations with which we cooperate. You can check what they do, who they help and what they need.</p>
 
-        <ul class="help--slides-items">
-            {% for found in foundations %}
-          <li>
-            <div class="col">
-              <div class="title"> {{ found.name }} </div>
-              <div class="subtitle">{{ found.description }}</div>
-            </div>
-            <div class="col"><div class="text">
-                    {{ found.categories.all|join:", " }}
-            </div></div>
-          </li>
-            {%  endfor %}
-        </ul>
+      <!--- Pagination--->
 
-      {% for found in founds %}
-    {{ found.full_name|upper }}<br>
-        {% endfor %}
-        <!-- Pagination-->
-      {% if founds.has_other_pages %}
-     <ul class="help--slides-pagination">
+        {% include 'pagination.html' %}
 
-    {% if founds.has_previous %}
-      <li><a href="?page={{ founds.previous_page_number }}" class="btn btn--small btn--without-border">&laquo;</a></li>
-    {% else %}
-      <li class="disabled btn btn--small btn--without-border"><span>&laquo;</span></li>
-    {% endif %}
-
-    {% for i in founds.paginator.page_range %}
-      {% if founds.number == i %}
-        <li class="active btn btn--small btn--without-border"><span>{{ i }} <span class="sr-only"> </span></span></li>
-      {% else %}
-        <li><a href="?page={{ i }}" class="btn btn--small btn--without-border">{{ i }}</a></li>
-      {% endif %}
-    {% endfor %}
-
-    {% if founds.has_next %}
-      <li><a href="?page={{ founds.next_page_number }}" class="btn btn--small btn--without-border">&raquo;</a></li>
-    {% else %}
-      <li class="disabled"><span>&raquo;</span></li>
-    {% endif %}
-  </ul>
-{% endif %}
       </div>
 
-      <!-- SLIDE 2 --->
+      <!--- SLIDE 2 --->
       <div class="help--slides" data-id="2">
         <p>
           In our database you will find a list of non-governmental organizations we cooperate with. You can check what they do, who they help and what they need.
@@ -172,7 +125,7 @@
             {% endfor %}
         </ul>
 
-        <!-- Pagination
+        <!--- Pagination
         <ul class="help--slides-pagination">
           <li><a href="#" class="btn btn--small btn--without-border active" data-page="1">1</a></li>
           <li><a href="#" class="btn btn--small btn--without-border" data-page="2">2</a></li>
@@ -183,7 +136,7 @@
         -->
       </div>
 
-      <!-- SLIDE 3 -->
+      <!--- SLIDE 3 -->
       <div class="help--slides" data-id="3">
         <p>Lorem ipsum dolor sit amet, his ocurreret persequeris ea, ad utinam laudem duo. Verterem adipisci partiendo eos ne, ea his reque quaeque recteque, ne quo lobortis intellegam.</p>
         <ul class="help--slides-items">
@@ -202,7 +155,7 @@
             {%  endfor %}
         </ul>
 
-        <!-- Pagination
+        <!--- Pagination
         <ul class="help--slides-pagination">
           <li><a href="#" class="btn btn--small btn--without-border active" data-page="1">1</a></li>
           <li><a href="#" class="btn btn--small btn--without-border" data-page="2">2</a></li>

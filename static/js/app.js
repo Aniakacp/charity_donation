@@ -1,3 +1,5 @@
+//let form =  document.getElementsByTagName('form')[0]
+
 document.addEventListener("DOMContentLoaded", function() {
   /**
    * HomePage - Help section
@@ -28,6 +30,7 @@ document.addEventListener("DOMContentLoaded", function() {
       /**
        * Pagination buttons
        */
+
       this.$el.addEventListener("click", e => {
         if (e.target.classList.contains("btn") && e.target.parentElement.parentElement.classList.contains("help--slides-pagination")) {
           this.changePage(e);
@@ -63,6 +66,7 @@ document.addEventListener("DOMContentLoaded", function() {
       e.preventDefault();
       const page = e.target.dataset.page;
 
+      //window.location.href = 'http://127.0.0.1:8000/#help/?page='+page
       console.log(page);
     }
   }
@@ -186,6 +190,7 @@ document.addEventListener("DOMContentLoaded", function() {
     init() {
       this.events();
       this.updateForm();
+
     }
 
     /**
@@ -210,8 +215,74 @@ document.addEventListener("DOMContentLoaded", function() {
         });
       });
 
+      // Send data to summary
+    function sendData() {
+    console.log('Sending data');
+    let bags = document.getElementsByClassName('form-group form-group--inline')[0].firstElementChild.firstElementChild
+    let street = document.getElementsByClassName('form-section--column')[0].firstElementChild.nextElementSibling
+    let city = document.getElementsByClassName('form-section--column')[0].firstElementChild.nextElementSibling.nextElementSibling
+    let code = document.getElementsByClassName('form-section--column')[0].firstElementChild.nextElementSibling.nextElementSibling.nextElementSibling
+    let phone = document.getElementsByClassName('form-section--column')[0].firstElementChild.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling
+
+    let date = document.getElementsByClassName('form-section--column')[1].firstElementChild.nextElementSibling
+    let time = document.getElementsByClassName('form-section--column')[1].firstElementChild.nextElementSibling.nextElementSibling
+    let notes = document.getElementsByClassName('form-section--column')[1].firstElementChild.nextElementSibling.nextElementSibling.nextElementSibling
+    let orginization= document.getElementsByClassName('checkbox radio')
+    let summary = document.getElementsByClassName('summary--text')
+
+    bags.addEventListener('input', function (){
+      summary[0].innerHTML=this.value + ' bags of '
+    })
+
+    street.firstElementChild.children[1].addEventListener('input', function(){
+      document.getElementsByClassName('form-section--column')[2].firstElementChild.nextElementSibling.firstElementChild.innerHTML= this.value
+    })
+
+    city.firstElementChild.children[1].addEventListener('input', function(){
+      document.getElementsByClassName('form-section--column')[2].firstElementChild.nextElementSibling.firstElementChild.nextElementSibling.innerHTML=this.value
+    })
+
+    code.firstElementChild.children[1].addEventListener('input', function(){
+      document.getElementsByClassName('form-section--column')[2].firstElementChild.nextElementSibling.firstElementChild.nextElementSibling.nextElementSibling.innerHTML=this.value
+    })
+
+    phone.firstElementChild.children[1].addEventListener('input', function(){
+      document.getElementsByClassName('form-section--column')[2].firstElementChild.nextElementSibling.firstElementChild.nextElementSibling.nextElementSibling.nextElementSibling.innerHTML=this.value
+    })
+
+    date.firstElementChild.children[1].addEventListener('input', function(){
+      document.getElementsByClassName('form-section--column')[3].firstElementChild.nextElementSibling.firstElementChild.innerHTML=this.value
+    })
+
+    time.firstElementChild.children[1].addEventListener('input', function(){
+     document.getElementsByClassName('form-section--column')[3].firstElementChild.nextElementSibling.firstElementChild.nextElementSibling.innerHTML=this.value
+    })
+
+    notes.firstElementChild.children[1].addEventListener('input', function(){
+    document.getElementsByClassName('form-section--column')[3].firstElementChild.nextElementSibling.firstElementChild.nextElementSibling.nextElementSibling.innerHTML=this.value
+    })
+
+    for(let i=0; i<orginization.length; i++) {
+      orginization[i].addEventListener('click', function (){
+      console.log(i)
+      })
+    }
+
+    let category = document.getElementsByClassName('form-group form-group--checkbox');
+    let cat_values = []
+
+    for(let i=0; i<7; i++) {
+      category[i].firstElementChild.firstElementChild.addEventListener('change', function () {
+      console.log(this.value)
+    })
+    }
+
+  }
+  sendData()
+
       // Form submit
       this.$form.querySelector("form").addEventListener("submit", e => this.submit(e));
+
     }
 
     /**
@@ -246,10 +317,43 @@ document.addEventListener("DOMContentLoaded", function() {
       e.preventDefault();
       this.currentStep++;
       this.updateForm();
+
+      var formData = new FormData(this.$form.querySelector("form"))
+
+      fetch("http://127.0.0.1:8000/add-donation/",
+  {
+        body: formData,
+        headers: {'Authorization': 'Basic ' + btoa('login:password'), },
+        method: "post",
+        data: {
+                 street : document.getElementsByClassName('form-section--column')[2].firstElementChild.nextElementSibling.firstElementChild.innerHTML,
+               //  street : $('#street').val(),
+                 csrfmiddlewaretoken: '{{ csrf_token }}',
+                 dataType: "json",
+                },
+        success: function(data){
+                   $('#output').html(data.msg) /* response message */
+                },
+      })
+    .then((json) => json)
+    .then((result) => {
+      console.log('Success:', result);
+      })
+    .then((response)=>{
+      window.location.href = "/confirmation/"
+      })
+    .catch(error => {
+      console.error(error)
+      });
     }
-  }
+    }  // Formsteps
+
   const form = document.querySelector(".form--steps");
+
   if (form !== null) {
     new FormSteps(form);
+  }
+  else{
+    console.log('form is empty')
   }
 });
