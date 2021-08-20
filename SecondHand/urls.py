@@ -25,6 +25,7 @@ urlpatterns = [
     path('register/', RegisterView.as_view(), name='register'),
     path('confirmation/', ConfirmationView.as_view(), name='confirmation'),
     path('logout/', LogoutView.as_view(), name='logout'),
-    path('settings/', SettingsView.as_view(), name='settings')
+    path('settings/', SettingsView.as_view(), name='settings'),
+    path('sendjson/', send_json, name='send_json'),
 
 ]

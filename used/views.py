@@ -1,10 +1,11 @@
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from django.shortcuts import render, redirect
 from django.views import View
 from django.views.generic import CreateView,ListView
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+import json
 
 
 from accounts.forms import LoginForm, RegisterForm
@@ -18,7 +19,8 @@ class LandingPageView(View):
         foundations = Institution.objects.all().filter(type=1)
         non_gov_organizations = Institution.objects.all().filter(type=2)
         collections = Institution.objects.all().filter(type=3)
-        all_institutions= Institution.objects.all().count()
+        all_institutions_= Institution.objects.all().count()
+        all_institutions=Donation.objects.all().distinct('institution').count()
         all_donations = Donation.objects.all().count()
         paginate_by = 2
 
@@ -40,7 +42,6 @@ class LandingPageView(View):
 
 class AddDonationView(MyTestUserPassesTest, View):
     def get(self, request):
-
         category_form= CategoryForm()
         address_form = AdressForm()
         collect_form= CollectForm()
@@ -54,6 +55,16 @@ class AddDonationView(MyTestUserPassesTest, View):
         collect_form = CollectForm(request.POST)
         instutution_form= InstitutionForm(request.POST)
         bags_form = BagsForm(request.POST)
+        if category_form.is_valid():
+            categories = category_form.cleaned_data['name']
+            selected_industries= Institution.objects.filter(categories__in= categories).distinct('name')
+            json_dict= {'istitution': []}
+            for industry in selected_industries:
+                json_dict['istitution'].append({'selected': industry.name})
+            print(json_dict)
+            send_json(json_dict)
+            # {'istitution': [{'selected': 'Children'}, {'selected': 'European Decent Life'}, {'selected': 'Garage charaty event'}, {'selected': 'new found'}]}
+
         if category_form.is_valid() and address_form.is_valid() and collect_form.is_valid() and instutution_form.is_valid() and bags_form.is_valid():
 
             categories = category_form.cleaned_data['name'] # <QuerySet [<Category: AGD>, <Category: Toys>]>
@@ -119,4 +130,27 @@ class SettingsView(MyTestUserPassesTest, View):
     def get(self, request):
         return render(request, 'settings.html')
 
+class SelectedInstitutionView(View):
+    def get(self, request):
+        selected_institutions= Institution.objects.filter(name='Restaurant For a Day')
+        return JsonResponse({selected_institutions: selected_institutions})
 
+
+def send_json(json_dict):
+   # pass
+    return JsonResponse(json_dict)
+    #return HttpResponse(json.dumps(json_dict), mimetype="application/json")
+
+class CatView(MyTestUserPassesTest, View):
+    def post(self, request):
+        category_form= CategoryForm()
+
+        if category_form.is_valid():
+            categories = category_form.cleaned_data['name']
+            selected_industries= Institution.objects.filter(categories__in= categories).distinct('name')
+            json_dict= {'istitution': []}
+            for industry in selected_industries:
+                json_dict['istitution'].append({'selected': industry.name})
+            print(json_dict)
+
+        return JsonResponse(json_dict)
