@@ -231,7 +231,7 @@ document.addEventListener("DOMContentLoaded", function() {
     let summary = document.getElementsByClassName('summary--text')
 
     bags.addEventListener('input', function (){
-      summary[0].innerHTML=this.value + ' bags of '
+      summary[0].innerHTML=this.value + ' bags'
     })
 
     street.firstElementChild.children[1].addEventListener('input', function(){
@@ -320,7 +320,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
       var formData = new FormData(this.$form.querySelector("form"))
 
-      fetch("http://127.0.0.1:8000/add-donation/",
+ fetch("http://127.0.0.1:8000/add-donation/",
   {
         body: formData,
         headers: {'Authorization': 'Basic ' + btoa('login:password'), },
@@ -347,6 +347,7 @@ document.addEventListener("DOMContentLoaded", function() {
       });
     }
     }  // Formsteps
+
 
   const form = document.querySelector(".form--steps");
 
