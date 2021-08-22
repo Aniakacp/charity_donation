@@ -7,3 +7,6 @@ local_settings.py
 venv/
 *.pyc
 .idea/
+__pycache__/
+venv
+db.sqlite3
