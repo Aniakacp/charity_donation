@@ -1,49 +1,47 @@
 # Charity Donation
 
-# Table of Contents
+## Table of Contents
 * [General info](#general-info)
 * [Technologies](#technologies)
 * [Scope of functionalities](#scope-of-functionalities)
 * [Illustrations](#illustrations)
-* [Set up](#setup)
 * [Project status](#project-status)
 
-## General info
+### General info
 Application helps to donate various goods to specific charity institutions via a
 form. The form is available only for logged users and handled by JavaScript.
 
-## Technologies
+### Technologies
 Project is created with:
-* Python: 3.8.10
+* Python (Django framework)
+* HTML
+* CSS
+* Java Script
+* DataBase: PostgreSQL
 
-## Scope of functionalities
+### Scope of functionalities
 * Create a user profile 
 * Ability to log through the email (User model modified)
 * The number of donated bags and supported institutions updates dynamically basing on the Data Base data
 * Logged user is able to access the donation form
 * After filling out the form the summary pops up (JavaScript)
 
-## Illustrations
-* main page:
+### Illustrations
+* Main page:
 <img src="./images_readme/main.png" raw=true>
-* create account:
+* Create account:
 <img src="./images_readme/create_account.png" raw=true>
-* log on:
+* Log on:
 <img src="./images_readme/login.png" raw=true>
-* dynamic numbers:
-<img src="./images_readme/dinamic.png" raw=true>
-* form:
+* Dynamic numbers:
+<img src="./images_readme/dynamic.png" raw=true>
+* Form:
 <img src="./images_readme/form1.png" raw=true>
-<img src="./images_readme/summary_form.png" raw=true>
-<img src="./images_readme/summary.png" raw=true>
+<img src="./images_readme/form2.png" raw=true>
+<img src="./images_readme/form3.png" raw=true>
+<img src="./images_readme/form4.png" raw=true>
+<img src="./images_readme/form5.png" raw=true>
+<img src="./images_readme/form_confirmation.png" raw=true>
 
-## Setup
-To run this project, install it locally using pip:
-
-$ cd ../your-dir
-$ pip install Django == 3.8.10
-
-And you're good to go!
-
-## Project status
+### Project status
 In progress

@@ -38,13 +38,13 @@
         <div class="stats--item">
           <em>{{ all_donations }}</em>
           <h3>Dedicated bags</h3>
-          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius est beatae, quod accusamus illum tempora!</p>
+          <p>This is the precise number of dedicated bags of various goods! You can donate all sort of things: cloths, toys, furniture as well as food and white goods. You can make this number grow! Help someone! Make it happen!</p>
         </div>
 
         <div class="stats--item">
           <em>{{ all_institutions }}</em>
           <h3>Supported organizations</h3>
-          <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Laboriosam magnam, sint nihil cupiditate quas quam.</p>
+          <p>This is the number of supported organizations with all sorts of different things.</p>
         </div>
 
       </div>
@@ -75,13 +75,15 @@
         </div>
       </div>
 
-      <a href="/login/" class="btn btn--large">Create account</a>
+      <a href="/register/" class="btn btn--large">Create account</a>
     </section>
 
     <section id="about-us" class="about-us">
       <div class="about-us--text">
         <h2>About us</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptas vitae animi rem pariatur incidunt libero optio esse quisquam illo omnis.</p>
+        <p>Our aim is to help those in need. Many people have things they are willing to donate,
+            but don't have the time to make the required research and organize it.
+            We want to help organize and make it simpler, faster and more effective. </p>
         <img src= "{% static "images/signature.svg" %}" class="about-us--text-signature" alt="Signature" />
       </div>
       <div class="about-us--image"><img src="{% static  "images/about-us.jpg" %}" alt="People in circle" /></div>
@@ -98,9 +100,8 @@
 
       <!-- SLIDE 1 -->
       <div class="help--slides active" data-id="1">
-        <p>In our database you will find a list of verified Foundations with which we cooperate. You can check what they do, who they help and what they need.</p>
-
-      <!--- Pagination--->
+        <p>We have a list of verified Institutions with which we cooperate.
+            You can check what they do, who they help and what they need.</p>
 
         {% include 'pagination.html' %}
 
@@ -108,9 +109,8 @@
 
       <!--- SLIDE 2 --->
       <div class="help--slides" data-id="2">
-        <p>
-          In our database you will find a list of non-governmental organizations we cooperate with. You can check what they do, who they help and what they need.
-        </p>
+        <p>We have a list of verified Institutions with which we cooperate.
+            You can check what they do, who they help and what they need.</p>
         <ul class="help--slides-items">
             {% for gov in non_gov_organizations %}
           <li>
@@ -131,7 +131,8 @@
 
       <!--- SLIDE 3 -->
       <div class="help--slides" data-id="3">
-        <p>Lorem ipsum dolor sit amet, his ocurreret persequeris ea, ad utinam laudem duo. Verterem adipisci partiendo eos ne, ea his reque quaeque recteque, ne quo lobortis intellegam.</p>
+        <p>We have a list of verified Institutions with which we cooperate.
+            You can check what they do, who they help and what they need.</p>
         <ul class="help--slides-items">
              {% for col in collections %}
 
